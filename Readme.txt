@@ -17,6 +17,7 @@ gcc tool chain revision 5.2 (July 2015) for last standards (c++11 and 14) includ
 gdb revision 7.9 for debugging
 glibc revision: 2.21
 sysroot build for headers and libs.
+dependencies: cygwin1.dll. You need to install cygwin and add this dll path to $PATH.
 
 Attached an example a picture with codeblocks under windows using a remote debugging of linpack benchmark code build with the crosscompiler.
 I added this example to show users that it is possible as it was my first need.
