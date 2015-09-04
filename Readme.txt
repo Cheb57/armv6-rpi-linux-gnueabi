@@ -1,12 +1,12 @@
 README:
-New armv6 hard float cross compiler tool chain for x86 windows (gcc tool chain revision 5.2 from July 2015)
+New armv6 hard float cross compiler tool chain for raspberry pi 1 running on x86 windows (gcc tool chain revision 5.2 from July 2015)
 
 
 
 Hello,
 
 I successfully built a cross compiler tool chain using the last ct-ng from the git repo.
-As i did not found any cross compiler for windows with a gcc revision > 4.7 (2012) for armv6 (raspberry pi), i prefered to build my own tool chain.
+As i did not found any cross compiler for windows with a gcc revision > 4.7 (2012) for armv6 (raspberry pi 1), i prefered to build my own tool chain.
 It was not easier as the host is cygwin and the environment offered is not compatible with ct-ng.
 So need to update the binutils for host script and the glibc source taken, to build without errors.
 
@@ -14,15 +14,16 @@ The details:
 host: x86 cygwin
 target: armv6-rpi-linux-gnueabi with hardfloat
 gcc tool chain revision 5.2 (July 2015) for last standards (c++11 and 14) including c/c++/gfortran compilers
-gdb revision 7.9 for debugging
+gdb/gdbserver revision 7.9.1 for debugging
 glibc revision: 2.21
 sysroot build for headers and libs.
 dependencies: cygwin1.dll. You need to install cygwin and add this dll path to $PATH.
 
-Attached an example a picture with codeblocks under windows using a remote debugging of linpack benchmark code build with the crosscompiler.
+Attached an example picture with codeblocks running on Windows 7 using a remote debugging of the linpack benchmark code build with the crosscompiler.
+Of course, you can use the IDE you want.
 I added this example to show users that it is possible as it was my first need.
 
-Comparison of the linpack code build using native compiler from raspberry pi (gcc 4.6) and cross compiler (gcc 5.2 using hard float from the raspberry pi cpu):
+Comparison of the linpack code build using a native compiler from raspberry pi (gcc 4.6) and cross compiler (gcc 5.2 using hard float from the raspberry pi cpu):
 
 native:  file linpack
 linpack: ELF 32-bit LSB executable, ARM, version 1 (SYSV), dynamically linked (uses shared libs), for GNU/Linux 2.6.26, BuildID[sha1]=0xab70ae18ea0d66d5ab5784bba66ec462d75c8be3, not stripped
@@ -68,6 +69,30 @@ Average rolled and unrolled performance:
      256   7.88  88.20%   2.66%   9.14%  49102.421
      512  15.92  88.00%   4.08%   7.91%  47963.620
 
+cross-compiler build check: readelf -A Linpack-dynamic-release
+Section d'Attribut: aeabi
+Attributs du fichier
+  Tag_CPU_name: "ARM1176JZF-S"
+  Tag_CPU_arch: v6KZ
+  Tag_ARM_ISA_use: Yes
+  Tag_THUMB_ISA_use: Thumb-1
+  Tag_FP_arch: VFPv2
+  Tag_ABI_PCS_wchar_t: 4
+  Tag_ABI_FP_rounding: Needed
+  Tag_ABI_FP_denormal: Needed
+  Tag_ABI_FP_exceptions: Needed
+  Tag_ABI_FP_number_model: IEEE 754
+  Tag_ABI_align_needed: 8-octet
+  Tag_ABI_align_preserved: 8-octet, sauf pour feuille SP
+  Tag_ABI_enum_size: int
+  Tag_ABI_VFP_args: VFP registers
+  Tag_CPU_unaligned_access: v6
+  Tag_Virtualization_use: TrustZone
+
+Get the cross compiler tool chain for windows on github:
+git clone https://github.com/Cheb57/armv6-rpi-linux-gnueabi.git
+
+Have a nice build and enjoy your coding on pi !
 
 Regards,
-R. Chebah.
+Rabia Chebah.
